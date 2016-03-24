@@ -67,7 +67,7 @@
 
        (facts
          
-       ;(println "============ Naive reduction ======================================")
+       (println "============ Naive reduction ======================================")
        
         ;; ============ Naive reduction ======================================
         (set-args! naive-reduction cl-data cl-output) => naive-reduction
@@ -81,10 +81,10 @@
         (finish! cqueue) => cqueue
         (println "Naive reduction time:"
                  (-> (<!! notifications) :event profiling-info durations :end))
-        ;(println "Naive output: " (seq output))
-        ;(println "sta je data: " data)        
+        (println "Naive output: " (seq output))
+        (println "sta je data: " data)        
         ;(aget output 0) => num-items
-        ;(println "============ Scalar reduction ======================================")
+        (println "============ Scalar reduction ======================================")
         ;; ============= Scalar reduction ====================================
          (set-args! reduction-scalar cl-data cl-partial-sums cl-partial-output)  ;setovanje promenjivih u kernelu        reduction-scalar
                                                                                  ;cl-partial-sums=1024  i         
@@ -96,15 +96,15 @@
         (enq-read! cqueue cl-partial-output partial-output)
  
         ;(long (first partial-output)) => workgroup-size
-       ;(println "partial-output POJEDINACNA RESENJA: " (seq partial-output))
+        ;(println "partial-output POJEDINACNA RESENJA: " (seq partial-output))
 
        
         (finish! cqueue)
         (println "Scalar reduction time:"
                  (-> (<!! notifications) :event profiling-info durations :end))
-       ;(println "UKUPAN ZBIR MEDJUSUMA" (apply + (float-array (seq partial-output))))
+       (println "UKUPAN ZBIR MEDJUSUMA" (apply + (float-array (seq partial-output))))
         
-       ;(println "============ Vector reduction ======================================")
+       (println "============ Vector reduction ======================================")
         ;; =============== Vector reduction ==================================
          (set-args! reduction-vector cl-data cl-partial-sums cl-partial-output)       ;setovanje polja u kernelu
         => reduction-vector
@@ -119,11 +119,11 @@
         (finish! cqueue) 
         (println "Vector reduction time:" 
                  (-> (<!! notifications) :event profiling-info durations :end))
-        ;(println "VEKTOR ZBIR MEDJUSUMA" (apply + (float-array (seq partial-output))))        
+        (println "VEKTOR ZBIR MEDJUSUMA" (apply + (float-array (seq partial-output))))        
         ;(first partial-output) => num-items
         ;(println "output: " (seq output))
         
-       ;(println "============ Complete reduction ======================================")
+        (println "============ Complete reduction ======================================")
         ;; =============== Complete reduction ==================================
          (set-args! reduction-complete cl-data cl-partial-sums cl-partial-output)       ;setovanje polja u kernelu
         => reduction-complete
@@ -148,16 +148,16 @@
         (println "Complete reduction time:" 
                  (-> (<!! notifications) :event profiling-info durations :end)
                  (-> (<!! notifications) :event profiling-info durations :end))
-        ;(println "VEKTOR ZBIR MEDJUSUMA 2222222" (first (seq partial-output)))          
+        (println "VEKTOR ZBIR MEDJUSUMA 2222222" (first (seq partial-output)))          
         ;(first partial-output) => num-items
         ;(println "output: " (seq output))        
 
 
         
         ;(println "============ Ostalo ======================================")           
-        ;(println "num-items: " num-items) 
+        (println "num-items: " num-items) 
         ;(println "output: " (seq output))
-        ;(println "---------------KRAJ -------------------")        
+        (println "---------------KRAJ -------------------")        
         )))))
   
  ;(catch Exception e (println "Greska 11111111: " (.getMessage e))))
